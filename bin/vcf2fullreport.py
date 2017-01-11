@@ -85,6 +85,9 @@ for line in contents:
 		for x in linelist[7].split(";"): 
 			# pattern must be: blob=blog or we won't consider
 			if (re.search(r'(\S+)=(\S+)', x)):
+				if x.split("=")[0] not in d_info:
+					sys.stderr.write('Error: INFO field key in body not present in vcf header\n')
+					sys.exit(1)
 				d_info[x.split("=")[0]] = x.split("=")[1]
 		# print INFO part of line - sorted values
 		print("\t".join([d_info[x] for x in sorted(d_info)])),
